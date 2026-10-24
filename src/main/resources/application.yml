@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: loaniq
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/loaniq}
+    username: ${DB_USER:loaniq}
+    password: ${DB_PASSWORD:loaniq}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.jdbc.time_zone: UTC
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
+
+springdoc:
+  swagger-ui:
+    path: /docs
+
+# Credit policy. Changing a threshold here changes the decision boundary
+# without a code change; every value is echoed into the audit trail.
+loaniq:
+  underwriting:
+    minimum-bureau-score: 620
+    max-debt-to-income: 0.45
+    max-loan-to-income-multiple: 4.0
+    min-tenure-months: 6
+    max-tenure-months: 84
+    base-score: 500
+    approve-threshold: 580
+    refer-threshold: 520
+
+logging:
+  level:
+    io.loaniq: INFO

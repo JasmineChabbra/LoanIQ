@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:loaniq;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  flyway:
+    enabled: false
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+
+loaniq:
+  underwriting:
+    minimum-bureau-score: 620
+    max-debt-to-income: 0.45
+    max-loan-to-income-multiple: 4.0
+    min-tenure-months: 6
+    max-tenure-months: 84
+    base-score: 500
+    approve-threshold: 580
+    refer-threshold: 520

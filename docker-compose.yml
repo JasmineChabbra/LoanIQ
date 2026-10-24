@@ -1,0 +1,35 @@
+# Local development stack.
+#
+# The app itself is not containerised here on purpose: during development you
+# want to restart it from your IDE without rebuilding an image. Run the
+# dependencies with `docker compose up -d`, then start the app normally.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: loaniq
+      POSTGRES_USER: loaniq
+      POSTGRES_PASSWORD: loaniq
+    ports:
+      - "5432:5432"
+    volumes:
+      - loaniq-pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U loaniq"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  loaniq-pg:
