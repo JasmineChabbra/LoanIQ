@@ -1,5 +1,7 @@
 # LoanIQ
 
+![LoanIQ](docs/social-card.png)
+
 AI-assisted credit underwriting for digital lending — built so that every decision can be explained and replayed.
 
 The interesting constraint in credit is not "can a model predict default". It is that a regulator can ask, two years later, *why this applicant was declined*, and the answer has to be the same every time you ask it. LoanIQ is built around that constraint.
